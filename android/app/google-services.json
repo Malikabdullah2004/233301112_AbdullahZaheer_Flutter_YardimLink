@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "461539379324",
+    "project_id": "yardimlink-2312",
+    "storage_bucket": "yardimlink-2312.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461539379324:android:002c32bf5824e40e4921f9",
+        "android_client_info": {
+          "package_name": "com.example.yardimlink"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpherAo8fVvTHHg5HrSk_99VnVayHKi24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
