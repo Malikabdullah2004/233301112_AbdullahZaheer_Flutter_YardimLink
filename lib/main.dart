@@ -7,9 +7,7 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const YardimLinkApp());
 }
@@ -23,14 +21,12 @@ class YardimLinkApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'YardimLink',
       theme: AppTheme.lightTheme,
-      home: const Scaffold(
-        body: Center(
+      home: Scaffold(
+        appBar: AppBar(title: const Text('YardimLink')),
+        body: const Center(
           child: Text(
             'YardimLink',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
         ),
       ),
