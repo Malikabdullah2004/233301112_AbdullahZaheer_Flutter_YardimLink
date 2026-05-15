@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../services/auth_service.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -8,7 +10,8 @@ class RegisterScreen extends StatefulWidget {
       _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState
+    extends State<RegisterScreen> {
 
   final TextEditingController nameController =
       TextEditingController();
@@ -19,10 +22,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController passwordController =
       TextEditingController();
 
+  final AuthService authService = AuthService();
+
   String selectedRole = 'Volunteer';
 
   @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> registerUser() async {
+
+    String? result = await authService.register(
+      name: nameController.text.trim(),
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+      role: selectedRole,
+    );
+
+    if (!mounted) return;
+
+    if (result == null) {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Registration successful',
+          ),
+        ),
+      );
+
+      Navigator.pop(context);
+
+    } else {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result),
+        ),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Register'),
@@ -66,8 +113,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               const SizedBox(height: 20),
 
-              DropdownButtonFormField(
+              DropdownButtonFormField<String>(
                 initialValue: selectedRole,
+                decoration: const InputDecoration(
+                  labelText: 'Select Role',
+                  border: OutlineInputBorder(),
+                ),
                 items: const [
                   DropdownMenuItem(
                     value: 'Volunteer',
@@ -83,10 +134,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     selectedRole = value!;
                   });
                 },
-                decoration: const InputDecoration(
-                  labelText: 'Select Role',
-                  border: OutlineInputBorder(),
-                ),
               ),
 
               const SizedBox(height: 30),
@@ -95,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: registerUser,
                   child: const Text('Register'),
                 ),
               ),
