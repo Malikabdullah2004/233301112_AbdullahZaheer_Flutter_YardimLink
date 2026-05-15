@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'constants/app_theme.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -9,23 +11,27 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(const YardimLinkApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class YardimLinkApp extends StatelessWidget {
+  const YardimLinkApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'YardimLink',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('YardimLink'),
-        ),
-        body: const Center(
-          child: Text('Firebase Connected Successfully'),
+      theme: AppTheme.lightTheme,
+      home: const Scaffold(
+        body: Center(
+          child: Text(
+            'YardimLink',
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
     );
