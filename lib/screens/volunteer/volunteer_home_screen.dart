@@ -4,6 +4,7 @@ import 'package:yardimlink/screens/volunteer/my_applications_screen.dart';
 import '../../services/auth_service.dart';
 import '../auth/login_screen.dart';
 import '../shared/task_list_screen.dart';
+import '../shared/profile_screen.dart';
 
 class VolunteerHomeScreen extends StatelessWidget {
   const VolunteerHomeScreen({super.key});
@@ -36,6 +37,15 @@ class VolunteerHomeScreen extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.assignment),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ProfileScreen()),
+              );
+            },
+            icon: const Icon(Icons.person),
           ),
         ],
       ),

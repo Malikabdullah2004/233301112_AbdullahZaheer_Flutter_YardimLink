@@ -4,6 +4,7 @@ import '../../services/auth_service.dart';
 import '../auth/login_screen.dart';
 import 'create_task_screen.dart';
 import '../shared/task_list_screen.dart';
+import '../shared/profile_screen.dart';
 
 class OrganizationHomeScreen extends StatelessWidget {
   const OrganizationHomeScreen({super.key});
@@ -28,6 +29,15 @@ class OrganizationHomeScreen extends StatelessWidget {
             },
             icon: const Icon(Icons.logout),
           ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ProfileScreen()),
+              );
+            },
+            icon: const Icon(Icons.person),
+          ),
         ],
       ),
       body: const TaskListScreen(),
@@ -43,5 +53,3 @@ class OrganizationHomeScreen extends StatelessWidget {
     );
   }
 }
-
-

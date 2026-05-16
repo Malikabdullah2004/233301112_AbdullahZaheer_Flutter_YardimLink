@@ -6,6 +6,8 @@ import '../../models/task_model.dart';
 import '../../services/application_service.dart';
 import '../organization/task_applications_screen.dart';
 
+import '../organization/edit_task_screen.dart';
+
 class TaskDetailScreen extends StatelessWidget {
   final TaskModel task;
 
@@ -22,10 +24,28 @@ class TaskDetailScreen extends StatelessWidget {
     return userDoc['role'] == 'Volunteer';
   }
 
+  bool isOwner() {
+    return FirebaseAuth.instance.currentUser!.uid == task.createdBy;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Task Details')),
+      appBar: AppBar(
+        title: const Text('Task Details'),
+        actions: [
+          if (isOwner())
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => EditTaskScreen(task: task)),
+                );
+              },
+              icon: const Icon(Icons.edit),
+            ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -70,7 +90,8 @@ class TaskDetailScreen extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () async {
                         String? result = await ApplicationService().applyToTask(
-                          task.id, task.title
+                          task.id,
+                          task.title,
                         );
 
                         if (!context.mounted) return;
@@ -100,8 +121,10 @@ class TaskDetailScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) =>
-                              TaskApplicationsScreen(taskId: task.id, taskTitle: task.title),
+                          builder: (_) => TaskApplicationsScreen(
+                            taskId: task.id,
+                            taskTitle: task.title,
+                          ),
                         ),
                       );
                     },

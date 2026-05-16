@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'log_service.dart';
 
 class ApplicationService {
 
@@ -58,6 +59,10 @@ class ApplicationService {
         'appliedAt': Timestamp.now(),
       });
 
+      await LogService().addLog(
+        'Applied to task',
+      );
+
       return null;
 
     } catch (e) {
@@ -92,6 +97,10 @@ class ApplicationService {
         .update({
       'status': status,
     });
+
+    await LogService().addLog(
+      'Updated application status to $status',
+    );
   }
 
   // GET USER APPLICATIONS
