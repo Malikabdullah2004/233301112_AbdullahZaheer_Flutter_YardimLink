@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yardimlink/screens/volunteer/my_applications_screen.dart';
 
 import '../../services/auth_service.dart';
 import '../auth/login_screen.dart';
@@ -9,29 +10,32 @@ class VolunteerHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Volunteer Home'),
         actions: [
-
           IconButton(
             onPressed: () async {
-
               await AuthService().logout();
 
               if (!context.mounted) return;
 
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(
-                  builder: (_) =>
-                      const LoginScreen(),
-                ),
+                MaterialPageRoute(builder: (_) => const LoginScreen()),
                 (route) => false,
               );
             },
             icon: const Icon(Icons.logout),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const MyApplicationsScreen()),
+              );
+            },
+            icon: const Icon(Icons.assignment),
           ),
         ],
       ),

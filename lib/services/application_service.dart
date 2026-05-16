@@ -7,7 +7,7 @@ class ApplicationService {
       FirebaseFirestore.instance;
 
   Future<String?> applyToTask(
-    String taskId,
+    String taskId, String taskTitle
   ) async {
 
     try {
@@ -52,6 +52,7 @@ class ApplicationService {
           .add({
 
         'taskId': taskId,
+        'taskTitle': taskTitle,
         'volunteerId': userId,
         'status': 'pending',
         'appliedAt': Timestamp.now(),
@@ -63,5 +64,49 @@ class ApplicationService {
 
       return e.toString();
     }
+  }
+
+    // GET APPLICATIONS FOR TASK
+
+  Stream<QuerySnapshot> getTaskApplications(
+    String taskId,
+    String taskTitle
+  ) {
+
+    return _firestore
+        .collection('applications')
+        .where('taskId', isEqualTo: taskId)
+        .snapshots();
+  }
+
+  // UPDATE STATUS
+
+  Future<void> updateApplicationStatus({
+    required String applicationId,
+    required String status,
+  }) async {
+
+    await _firestore
+        .collection('applications')
+        .doc(applicationId)
+        .update({
+      'status': status,
+    });
+  }
+
+  // GET USER APPLICATIONS
+
+  Stream<QuerySnapshot> getUserApplications() {
+
+    String userId =
+        FirebaseAuth.instance.currentUser!.uid;
+
+    return _firestore
+        .collection('applications')
+        .where(
+          'volunteerId',
+          isEqualTo: userId,
+        )
+        .snapshots();
   }
 }
