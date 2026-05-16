@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../services/auth_service.dart';
 import '../auth/login_screen.dart';
+import '../shared/task_list_screen.dart';
 
 class VolunteerHomeScreen extends StatelessWidget {
   const VolunteerHomeScreen({super.key});
@@ -34,14 +35,7 @@ class VolunteerHomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: const Center(
-        child: Text(
-          'Welcome Volunteer',
-          style: TextStyle(
-            fontSize: 24,
-          ),
-        ),
-      ),
+      body: const TaskListScreen(),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../services/auth_service.dart';
 import '../auth/login_screen.dart';
 import 'create_task_screen.dart';
+import '../shared/task_list_screen.dart';
 
 class OrganizationHomeScreen extends StatelessWidget {
   const OrganizationHomeScreen({super.key});
@@ -29,9 +30,7 @@ class OrganizationHomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: const Center(
-        child: Text('Welcome Organization', style: TextStyle(fontSize: 24)),
-      ),
+      body: const TaskListScreen(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -44,3 +43,5 @@ class OrganizationHomeScreen extends StatelessWidget {
     );
   }
 }
+
+
