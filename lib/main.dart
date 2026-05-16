@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'constants/app_theme.dart';
 import 'firebase_options.dart';
-import 'screens/auth/login_screen.dart';
+import 'screens/shared/loading_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,7 @@ class YardimLinkApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'YardimLink',
       theme: AppTheme.lightTheme,
-      home: LoginScreen(),
+      home: const LoadingScreen(),
     );
   }
 }

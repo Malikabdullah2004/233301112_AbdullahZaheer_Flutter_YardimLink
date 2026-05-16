@@ -2,22 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../../services/auth_service.dart';
 import 'register_screen.dart';
+import '../shared/loading_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() =>
-      _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
 
-  final TextEditingController emailController =
-      TextEditingController();
-
-  final TextEditingController passwordController =
-      TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   final AuthService authService = AuthService();
 
@@ -29,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> loginUser() async {
-
     String? result = await authService.login(
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
@@ -38,35 +34,28 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!mounted) return;
 
     if (result == null) {
+      if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Login successful'),
-        ),
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => const LoadingScreen()),
+        (route) => false,
       );
-
     } else {
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(result),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(result)));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
+      appBar: AppBar(title: const Text('Login')),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-
             const SizedBox(height: 40),
 
             TextField(
@@ -105,15 +94,10 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        const RegisterScreen(),
-                  ),
+                  MaterialPageRoute(builder: (_) => const RegisterScreen()),
                 );
               },
-              child: const Text(
-                'Don\'t have an account? Register',
-              ),
+              child: const Text('Don\'t have an account? Register'),
             ),
           ],
         ),
