@@ -4,17 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 class AppTheme {
-
   // LIGHT THEME
 
   static ThemeData lightTheme = ThemeData(
-
     useMaterial3: true,
 
     brightness: Brightness.light,
 
-    scaffoldBackgroundColor:
-        AppColors.background,
+    scaffoldBackgroundColor: AppColors.background,
 
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.primary,
@@ -32,94 +29,62 @@ class AppTheme {
       color: Colors.white,
       elevation: 4,
       shadowColor: Colors.black12,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     ),
 
-    elevatedButtonTheme:
-        ElevatedButtonThemeData(
-
+    elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.primary,
 
-        backgroundColor:
-            AppColors.primary,
+        foregroundColor: Colors.white,
 
-        foregroundColor:
-            Colors.white,
+        minimumSize: const Size(double.infinity, 55),
 
-        minimumSize:
-            const Size(double.infinity, 55),
-
-        shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     ),
 
-    inputDecorationTheme:
-        InputDecorationTheme(
-
+    inputDecorationTheme: InputDecorationTheme(
       filled: true,
 
       fillColor: Colors.white,
 
       border: OutlineInputBorder(
-        borderRadius:
-            BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16),
 
-        borderSide:
-            BorderSide.none,
+        borderSide: BorderSide.none,
       ),
 
-      enabledBorder:
-          OutlineInputBorder(
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
 
-        borderRadius:
-            BorderRadius.circular(16),
-
-        borderSide:
-            BorderSide.none,
+        borderSide: BorderSide.none,
       ),
 
-      focusedBorder:
-          OutlineInputBorder(
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
 
-        borderRadius:
-            BorderRadius.circular(16),
-
-        borderSide: const BorderSide(
-          color: AppColors.primary,
-          width: 2,
-        ),
+        borderSide: const BorderSide(color: AppColors.primary, width: 2),
       ),
     ),
 
-    bottomNavigationBarTheme:
-        const BottomNavigationBarThemeData(
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      selectedItemColor: AppColors.primary,
 
-      selectedItemColor:
-          AppColors.primary,
-
-      unselectedItemColor:
-          Colors.grey,
+      unselectedItemColor: Colors.grey,
     ),
 
-    textTheme:
-        GoogleFonts.poppinsTextTheme(),
+    textTheme: GoogleFonts.poppinsTextTheme(),
   );
 
   // DARK THEME
 
   static ThemeData darkTheme = ThemeData(
-
     useMaterial3: true,
 
     brightness: Brightness.dark,
 
-    scaffoldBackgroundColor:
-        const Color(0xFF121212),
+    scaffoldBackgroundColor: const Color(0xFF121212),
 
     colorScheme: ColorScheme.fromSeed(
       seedColor: Colors.green,
@@ -129,11 +94,9 @@ class AppTheme {
     appBarTheme: const AppBarTheme(
       elevation: 0,
       centerTitle: true,
-      backgroundColor:
-          Color(0xFF1E1E1E),
+      backgroundColor: Color(0xFF1E1E1E),
 
-      foregroundColor:
-          Colors.white,
+      foregroundColor: Colors.white,
     ),
 
     cardTheme: CardThemeData(
@@ -141,88 +104,53 @@ class AppTheme {
 
       elevation: 4,
 
-      shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     ),
 
-    elevatedButtonTheme:
-        ElevatedButtonThemeData(
-
+    elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.green,
 
-        backgroundColor:
-            Colors.green,
+        foregroundColor: Colors.white,
 
-        foregroundColor:
-            Colors.white,
+        minimumSize: const Size(double.infinity, 55),
 
-        minimumSize:
-            const Size(double.infinity, 55),
-
-        shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     ),
 
-    inputDecorationTheme:
-        InputDecorationTheme(
-
+    inputDecorationTheme: InputDecorationTheme(
       filled: true,
 
-      fillColor:
-          const Color(0xFF1E1E1E),
+      fillColor: const Color(0xFF1E1E1E),
 
       border: OutlineInputBorder(
-        borderRadius:
-            BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16),
 
-        borderSide:
-            BorderSide.none,
+        borderSide: BorderSide.none,
       ),
 
-      enabledBorder:
-          OutlineInputBorder(
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
 
-        borderRadius:
-            BorderRadius.circular(16),
-
-        borderSide:
-            BorderSide.none,
+        borderSide: BorderSide.none,
       ),
 
-      focusedBorder:
-          OutlineInputBorder(
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
 
-        borderRadius:
-            BorderRadius.circular(16),
-
-        borderSide: const BorderSide(
-          color: Colors.green,
-          width: 2,
-        ),
+        borderSide: const BorderSide(color: Colors.green, width: 2),
       ),
     ),
 
-    bottomNavigationBarTheme:
-        const BottomNavigationBarThemeData(
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      selectedItemColor: Colors.green,
 
-      selectedItemColor:
-          Colors.green,
+      unselectedItemColor: Colors.grey,
 
-      unselectedItemColor:
-          Colors.grey,
-
-      backgroundColor:
-          Color(0xFF1E1E1E),
+      backgroundColor: Color(0xFF1E1E1E),
     ),
 
-    textTheme:
-        GoogleFonts.poppinsTextTheme(
-      ThemeData.dark().textTheme,
-    ),
+    textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
   );
 }

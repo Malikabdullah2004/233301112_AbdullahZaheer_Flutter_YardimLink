@@ -27,10 +27,7 @@ class TaskListScreen extends StatelessWidget {
 
                 SizedBox(height: 20),
 
-                Text(
-                  'No volunteer tasks yet',
-                  style: TextStyle(fontSize: 18),
-                ),
+                Text('No volunteer tasks yet', style: TextStyle(fontSize: 18)),
               ],
             ),
           );

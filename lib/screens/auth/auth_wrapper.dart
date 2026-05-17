@@ -7,89 +7,56 @@ import '../volunteer/volunteer_main_screen.dart';
 import 'login_screen.dart';
 
 class AuthWrapper extends StatelessWidget {
-
-  const AuthWrapper({
-    super.key,
-  });
+  const AuthWrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder<User?>(
-      stream:
-          FirebaseAuth.instance
-              .authStateChanges(),
+      stream: FirebaseAuth.instance.authStateChanges(),
 
       builder: (context, snapshot) {
-
         // LOADING
 
-        if (snapshot.connectionState ==
-            ConnectionState.waiting) {
-
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
-            body: Center(
-              child:
-                  CircularProgressIndicator(),
-            ),
+            body: Center(child: CircularProgressIndicator()),
           );
         }
 
         // NOT LOGGED IN
 
         if (!snapshot.hasData) {
-
           return const LoginScreen();
         }
 
         // USER LOGGED IN
 
         return FutureBuilder<DocumentSnapshot>(
+          future: FirebaseFirestore.instance
+              .collection('users')
+              .doc(snapshot.data!.uid)
+              .get(),
 
-          future:
-              FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(snapshot.data!.uid)
-                  .get(),
-
-          builder: (
-            context,
-            userSnapshot,
-          ) {
-
-            if (userSnapshot.connectionState ==
-                ConnectionState.waiting) {
-
+          builder: (context, userSnapshot) {
+            if (userSnapshot.connectionState == ConnectionState.waiting) {
               return const Scaffold(
-                body: Center(
-                  child:
-                      CircularProgressIndicator(),
-                ),
+                body: Center(child: CircularProgressIndicator()),
               );
             }
 
-            if (!userSnapshot.hasData ||
-                !userSnapshot.data!.exists) {
-
+            if (!userSnapshot.hasData || !userSnapshot.data!.exists) {
               return const Scaffold(
-                body: Center(
-                  child: Text(
-                    'User data not found',
-                  ),
-                ),
+                body: Center(child: Text('User data not found')),
               );
             }
 
-            final userData =
-                userSnapshot.data!;
+            final userData = userSnapshot.data!;
 
-            final role =
-                userData['role'];
+            final role = userData['role'];
 
             // VOLUNTEER
 
             if (role == 'Volunteer') {
-
               return const VolunteerMainScreen();
             }
 

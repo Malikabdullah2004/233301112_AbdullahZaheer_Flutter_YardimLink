@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskModel {
-
   final String id;
   final String title;
   final String description;
@@ -18,10 +17,7 @@ class TaskModel {
     required this.createdAt,
   });
 
-  factory TaskModel.fromMap(
-    String id,
-    Map<String, dynamic> data,
-  ) {
+  factory TaskModel.fromMap(String id, Map<String, dynamic> data) {
     return TaskModel(
       id: id,
       title: data['title'] ?? '',

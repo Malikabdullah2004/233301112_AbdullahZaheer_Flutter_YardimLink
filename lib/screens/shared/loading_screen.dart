@@ -10,18 +10,16 @@ class LoadingScreen extends StatelessWidget {
   const LoadingScreen({super.key});
 
   Future<Widget> getScreen() async {
-
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
       return const LoginScreen();
     }
 
-    DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .get();
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
 
     String role = userDoc['role'];
 
@@ -34,18 +32,12 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: getScreen(),
       builder: (context, snapshot) {
-
-        if (snapshot.connectionState ==
-            ConnectionState.waiting) {
-
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
+            body: Center(child: CircularProgressIndicator()),
           );
         }
 

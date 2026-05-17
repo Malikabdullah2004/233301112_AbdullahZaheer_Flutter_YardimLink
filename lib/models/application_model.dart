@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ApplicationModel {
-
   final String id;
   final String taskId;
   final String volunteerId;
@@ -16,10 +15,7 @@ class ApplicationModel {
     required this.appliedAt,
   });
 
-  factory ApplicationModel.fromMap(
-    String id,
-    Map<String, dynamic> data,
-  ) {
+  factory ApplicationModel.fromMap(String id, Map<String, dynamic> data) {
     return ApplicationModel(
       id: id,
       taskId: data['taskId'],

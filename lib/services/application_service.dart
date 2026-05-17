@@ -4,9 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'log_service.dart';
 
 class ApplicationService {
-
-  final FirebaseFirestore _firestore =
-      FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // APPLY TO TASK
 
@@ -14,19 +12,15 @@ class ApplicationService {
     required String taskId,
     required String taskTitle,
   }) async {
-
     try {
-
-      String userId =
-          FirebaseAuth.instance.currentUser!.uid;
+      String userId = FirebaseAuth.instance.currentUser!.uid;
 
       // GET USER ROLE
 
-      DocumentSnapshot userDoc =
-          await _firestore
-              .collection('users')
-              .doc(userId)
-              .get();
+      DocumentSnapshot userDoc = await _firestore
+          .collection('users')
+          .doc(userId)
+          .get();
 
       String role = userDoc['role'];
 
@@ -38,30 +32,19 @@ class ApplicationService {
 
       // CHECK DUPLICATE
 
-      QuerySnapshot existing =
-          await _firestore
-              .collection('applications')
-              .where(
-                'taskId',
-                isEqualTo: taskId,
-              )
-              .where(
-                'volunteerId',
-                isEqualTo: userId,
-              )
-              .get();
+      QuerySnapshot existing = await _firestore
+          .collection('applications')
+          .where('taskId', isEqualTo: taskId)
+          .where('volunteerId', isEqualTo: userId)
+          .get();
 
       if (existing.docs.isNotEmpty) {
-
         return 'You already applied to this task';
       }
 
       // SAVE APPLICATION
 
-      await _firestore
-          .collection('applications')
-          .add({
-
+      await _firestore.collection('applications').add({
         'taskId': taskId,
 
         'taskTitle': taskTitle,
@@ -73,30 +56,20 @@ class ApplicationService {
         'appliedAt': Timestamp.now(),
       });
 
-      await LogService().addLog(
-        'Applied to task',
-      );
+      await LogService().addLog('Applied to task');
 
       return null;
-
     } catch (e) {
-
       return e.toString();
     }
   }
 
   // GET APPLICATIONS FOR TASK
 
-  Stream<QuerySnapshot> getTaskApplications(
-    String taskId,
-  ) {
-
+  Stream<QuerySnapshot> getTaskApplications(String taskId) {
     return _firestore
         .collection('applications')
-        .where(
-          'taskId',
-          isEqualTo: taskId,
-        )
+        .where('taskId', isEqualTo: taskId)
         .snapshots();
   }
 
@@ -106,33 +79,21 @@ class ApplicationService {
     required String applicationId,
     required String status,
   }) async {
-
-    await _firestore
-        .collection('applications')
-        .doc(applicationId)
-        .update({
-
+    await _firestore.collection('applications').doc(applicationId).update({
       'status': status,
     });
 
-    await LogService().addLog(
-      'Updated application status to $status',
-    );
+    await LogService().addLog('Updated application status to $status');
   }
 
   // GET USER APPLICATIONS
 
   Stream<QuerySnapshot> getUserApplications() {
-
-    String userId =
-        FirebaseAuth.instance.currentUser!.uid;
+    String userId = FirebaseAuth.instance.currentUser!.uid;
 
     return _firestore
         .collection('applications')
-        .where(
-          'volunteerId',
-          isEqualTo: userId,
-        )
+        .where('volunteerId', isEqualTo: userId)
         .snapshots();
   }
 }

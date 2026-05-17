@@ -8,104 +8,64 @@ import '../organization/edit_task_screen.dart';
 import '../organization/task_applications_screen.dart';
 
 class TaskDetailScreen extends StatelessWidget {
-
   final TaskModel task;
 
-  const TaskDetailScreen({
-    super.key,
-    required this.task,
-  });
+  const TaskDetailScreen({super.key, required this.task});
 
   bool isOwner() {
-
-    return FirebaseAuth
-            .instance
-            .currentUser!
-            .uid ==
-        task.createdBy;
+    return FirebaseAuth.instance.currentUser!.uid == task.createdBy;
   }
 
   Future<bool> isVolunteer() async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
 
-    String userId =
-        FirebaseAuth.instance.currentUser!.uid;
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .get();
 
-    DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
-            .get();
-
-    return userDoc['role'] ==
-        'Volunteer';
+    return userDoc['role'] == 'Volunteer';
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
       appBar: AppBar(
-
-        title: const Text(
-          'Task Details',
-        ),
+        title: const Text('Task Details'),
 
         actions: [
-
           if (isOwner())
-
             IconButton(
-
               onPressed: () {
-
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        EditTaskScreen(
-                      task: task,
-                    ),
-                  ),
+                  MaterialPageRoute(builder: (_) => EditTaskScreen(task: task)),
                 );
               },
 
-              icon:
-                  const Icon(Icons.edit),
+              icon: const Icon(Icons.edit),
             ),
         ],
       ),
 
       body: Padding(
-
-        padding:
-            const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
 
         child: Column(
-
-          crossAxisAlignment:
-              CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-
             Text(
               task.title,
 
-              style: const TextStyle(
-                fontSize: 28,
-                fontWeight:
-                    FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 20),
 
             Row(
               children: [
-
-                const Icon(
-                  Icons.location_on,
-                ),
+                const Icon(Icons.location_on),
 
                 const SizedBox(width: 8),
 
@@ -118,52 +78,34 @@ class TaskDetailScreen extends StatelessWidget {
             Text(
               task.description,
 
-              style: const TextStyle(
-                fontSize: 16,
-                height: 1.5,
-              ),
+              style: const TextStyle(fontSize: 16, height: 1.5),
             ),
 
             const Spacer(),
 
             FutureBuilder<bool>(
-
               future: isVolunteer(),
 
-              builder: (
-                context,
-                snapshot,
-              ) {
-
+              builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-
                   return const SizedBox();
                 }
 
-                bool volunteer =
-                    snapshot.data!;
+                bool volunteer = snapshot.data!;
 
                 // VOLUNTEER
 
                 if (volunteer) {
-
                   return SizedBox(
-
                     width: double.infinity,
                     height: 55,
 
                     child: ElevatedButton(
-
                       onPressed: () async {
-
-                        String? result =
-                            await ApplicationService()
-                                .applyToTask(
-
+                        String? result = await ApplicationService().applyToTask(
                           taskId: task.id,
 
-                          taskTitle:
-                              task.title,
+                          taskTitle: task.title,
                         );
 
                         if (!context.mounted) {
@@ -171,35 +113,19 @@ class TaskDetailScreen extends StatelessWidget {
                         }
 
                         if (result == null) {
-
-                          ScaffoldMessenger.of(
-                            context,
-                          ).showSnackBar(
-
+                          ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text(
-                                'Application submitted',
-                              ),
+                              content: Text('Application submitted'),
                             ),
                           );
-
                         } else {
-
                           ScaffoldMessenger.of(
                             context,
-                          ).showSnackBar(
-
-                            SnackBar(
-                              content:
-                                  Text(result),
-                            ),
-                          );
+                          ).showSnackBar(SnackBar(content: Text(result)));
                         }
                       },
 
-                      child: const Text(
-                        'Apply',
-                      ),
+                      child: const Text('Apply'),
                     ),
                   );
                 }
@@ -207,28 +133,21 @@ class TaskDetailScreen extends StatelessWidget {
                 // ORGANIZATION
 
                 return SizedBox(
-
                   width: double.infinity,
                   height: 55,
 
                   child: ElevatedButton(
-
                     onPressed: () {
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) =>
-                              TaskApplicationsScreen(
-                            taskId: task.id,
-                          ),
+                              TaskApplicationsScreen(taskId: task.id),
                         ),
                       );
                     },
 
-                    child: const Text(
-                      'View Applications',
-                    ),
+                    child: const Text('View Applications'),
                   ),
                 );
               },

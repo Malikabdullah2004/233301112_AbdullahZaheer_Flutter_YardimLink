@@ -28,29 +28,18 @@ class _OrganizationMainScreenState extends State<OrganizationMainScreen> {
 
         actions: [
           Builder(
-  builder: (context) {
+            builder: (context) {
+              final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final isDark =
-        Theme.of(context).brightness ==
-            Brightness.dark;
+              return IconButton(
+                onPressed: () {
+                  YardimLinkApp.of(context).toggleTheme();
+                },
 
-    return IconButton(
-
-      onPressed: () {
-
-        YardimLinkApp.of(context)
-            .toggleTheme();
-      },
-
-      icon: Icon(
-
-        isDark
-            ? Icons.light_mode
-            : Icons.dark_mode,
-      ),
-    );
-  },
-),
+                icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+              );
+            },
+          ),
         ],
       ),
 
