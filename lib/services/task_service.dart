@@ -31,7 +31,7 @@ class TaskService {
     }
   }
 
-    // UPDATE TASK
+  // UPDATE TASK
 
   Future<String?> updateTask({
     required String taskId,
@@ -39,52 +39,44 @@ class TaskService {
     required String description,
     required String city,
   }) async {
-
     try {
-
-      await _firestore
-          .collection('tasks')
-          .doc(taskId)
-          .update({
-
+      await _firestore.collection('tasks').doc(taskId).update({
         'title': title,
         'description': description,
         'city': city,
       });
 
-      await LogService().addLog(
-        'Updated task: $title',
-      );
+      await LogService().addLog('Updated task: $title');
 
       return null;
-
     } catch (e) {
-
       return e.toString();
     }
   }
 
   // DELETE TASK
 
-  Future<String?> deleteTask(
-    String taskId,
-  ) async {
-
+  Future<String?> deleteTask(String taskId) async {
     try {
+      // DELETE RELATED APPLICATIONS
 
-      await _firestore
-          .collection('tasks')
-          .doc(taskId)
-          .delete();
+      QuerySnapshot applications = await _firestore
+          .collection('applications')
+          .where('taskId', isEqualTo: taskId)
+          .get();
 
-      await LogService().addLog(
-        'Deleted a task',
-      );
+      for (var doc in applications.docs) {
+        await _firestore.collection('applications').doc(doc.id).delete();
+      }
+
+      // DELETE TASK
+
+      await _firestore.collection('tasks').doc(taskId).delete();
+
+      await LogService().addLog('Deleted task');
 
       return null;
-
     } catch (e) {
-
       return e.toString();
     }
   }

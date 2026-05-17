@@ -2,184 +2,108 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/application_service.dart';
+import '../../widgets/empty_state.dart';
 
-class TaskApplicationsScreen
-    extends StatelessWidget {
-
+class TaskApplicationsScreen extends StatelessWidget {
   final String taskId;
 
-  const TaskApplicationsScreen({
-    super.key,
-    required this.taskId,
-  });
+  const TaskApplicationsScreen({super.key, required this.taskId});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
-      appBar: AppBar(
-        title: const Text(
-          'Applications',
-        ),
-      ),
+      appBar: AppBar(title: const Text('Applications')),
 
       body: StreamBuilder<QuerySnapshot>(
-
-        stream:
-            ApplicationService()
-                .getTaskApplications(taskId),
+        stream: ApplicationService().getTaskApplications(taskId),
 
         builder: (context, snapshot) {
-
-          if (snapshot.connectionState ==
-              ConnectionState.waiting) {
-
-            return const Center(
-              child:
-                  CircularProgressIndicator(),
-            );
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (!snapshot.hasData) {
+            return const EmptyState(
+              icon: Icons.assignment_outlined,
 
-            return const Center(
-              child: Text(
-                'No data found',
-              ),
+              title: 'No Applications Yet',
+
+              subtitle: 'No volunteers have applied yet.',
             );
           }
 
-          final applications =
-              snapshot.data!.docs;
+          final applications = snapshot.data!.docs;
 
           if (applications.isEmpty) {
-
-            return const Center(
-              child: Text(
-                'No applications yet',
-              ),
-            );
+            return const Center(child: Text('No applications yet'));
           }
 
           return ListView.builder(
+            padding: const EdgeInsets.all(16),
 
-            padding:
-                const EdgeInsets.all(16),
+            itemCount: applications.length,
 
-            itemCount:
-                applications.length,
-
-            itemBuilder: (
-              context,
-              index,
-            ) {
-
-              final application =
-                  applications[index];
+            itemBuilder: (context, index) {
+              final application = applications[index];
 
               return Card(
-
                 child: Padding(
-
-                  padding:
-                      const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
 
                   child: Column(
-
-                    crossAxisAlignment:
-                        CrossAxisAlignment
-                            .start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
 
                     children: [
-
                       Text(
-                        application[
-                                'taskTitle'] ??
-                            'Volunteer Task',
+                        application['taskTitle'] ?? 'Volunteer Task',
 
-                        style:
-                            const TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
-                          fontWeight:
-                              FontWeight.bold,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
 
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
 
-                      Text(
-                        'Status: ${application['status']}',
-                      ),
+                      Text('Status: ${application['status']}'),
 
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
 
                       Row(
                         children: [
-
                           Expanded(
-                            child:
-                                ElevatedButton(
-
-                              onPressed:
-                                  () async {
-
+                            child: ElevatedButton(
+                              onPressed: () async {
                                 await ApplicationService()
                                     .updateApplicationStatus(
+                                      applicationId: application.id,
 
-                                  applicationId:
-                                      application
-                                          .id,
-
-                                  status:
-                                      'approved',
-                                );
+                                      status: 'approved',
+                                    );
                               },
 
-                              child:
-                                  const Text(
-                                'Approve',
-                              ),
+                              child: const Text('Approve'),
                             ),
                           ),
 
-                          const SizedBox(
-                            width: 12,
-                          ),
+                          const SizedBox(width: 12),
 
                           Expanded(
-                            child:
-                                ElevatedButton(
-
-                              onPressed:
-                                  () async {
-
+                            child: ElevatedButton(
+                              onPressed: () async {
                                 await ApplicationService()
                                     .updateApplicationStatus(
+                                      applicationId: application.id,
 
-                                  applicationId:
-                                      application
-                                          .id,
-
-                                  status:
-                                      'rejected',
-                                );
+                                      status: 'rejected',
+                                    );
                               },
 
-                              style:
-                                  ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Colors.red,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
                               ),
 
-                              child:
-                                  const Text(
-                                'Reject',
-                              ),
+                              child: const Text('Reject'),
                             ),
                           ),
                         ],

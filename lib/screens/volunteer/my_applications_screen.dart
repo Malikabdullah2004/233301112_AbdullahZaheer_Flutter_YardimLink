@@ -3,62 +3,43 @@ import 'package:flutter/material.dart';
 
 import '../../services/application_service.dart';
 
-class MyApplicationsScreen
-    extends StatelessWidget {
+import '../../widgets/empty_state.dart';
 
-  const MyApplicationsScreen({
-    super.key,
-  });
+class MyApplicationsScreen extends StatelessWidget {
+  const MyApplicationsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder<QuerySnapshot>(
-
-      stream:
-          ApplicationService()
-              .getUserApplications(),
+      stream: ApplicationService().getUserApplications(),
 
       builder: (context, snapshot) {
-
         if (!snapshot.hasData) {
-
-          return const Center(
-            child:
-                CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
-        final applications =
-            snapshot.data!.docs;
+        final applications = snapshot.data!.docs;
 
         if (applications.isEmpty) {
+          return const EmptyState(
+            icon: Icons.volunteer_activism,
 
-          return const Center(
-            child: Text(
-              'No applications yet',
-            ),
+            title: 'No Applications',
+
+            subtitle: 'You have not applied to any tasks yet.',
           );
         }
 
         return ListView.builder(
           itemCount: applications.length,
           itemBuilder: (context, index) {
-
-            final application =
-                applications[index];
+            final application = applications[index];
 
             return Card(
-              margin:
-                  const EdgeInsets.all(12),
+              margin: const EdgeInsets.all(12),
               child: ListTile(
-                title: Text(
-                  application['taskTitle'] ??
-                      'Volunteer Task',
-                ),
-                subtitle: Text(
-                  'Status: ${application['status']}',
-                ),
+                title: Text(application['taskTitle'] ?? 'Volunteer Task'),
+                subtitle: Text('Status: ${application['status']}'),
               ),
             );
           },
