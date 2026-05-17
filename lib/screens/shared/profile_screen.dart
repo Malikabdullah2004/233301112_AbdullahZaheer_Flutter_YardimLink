@@ -6,75 +6,44 @@ import '../../services/auth_service.dart';
 import '../auth/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
-
-  const ProfileScreen({
-    super.key,
-  });
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-    final String userId =
-        FirebaseAuth.instance.currentUser!.uid;
+    final String userId = FirebaseAuth.instance.currentUser!.uid;
 
     return FutureBuilder<DocumentSnapshot>(
-
-      future:
-          FirebaseFirestore.instance
-              .collection('users')
-              .doc(userId)
-              .get(),
+      future: FirebaseFirestore.instance.collection('users').doc(userId).get(),
 
       builder: (context, snapshot) {
-
-        if (snapshot.connectionState ==
-            ConnectionState.waiting) {
-
-          return const Center(
-            child:
-                CircularProgressIndicator(),
-          );
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
         }
 
-        if (!snapshot.hasData ||
-            !snapshot.data!.exists) {
-
-          return const Center(
-            child: Text(
-              'User data not found',
-            ),
-          );
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return const Center(child: Text('User data not found'));
         }
 
-        final userData =
-            snapshot.data!;
+        final userData = snapshot.data!;
 
         return SingleChildScrollView(
-          padding:
-              const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-
               const SizedBox(height: 20),
 
               const CircleAvatar(
                 radius: 50,
-                child: Icon(
-                  Icons.person,
-                  size: 50,
-                ),
+                child: Icon(Icons.person, size: 50),
               ),
 
               const SizedBox(height: 30),
 
               Card(
                 child: ListTile(
-                  leading:
-                      const Icon(Icons.person),
+                  leading: const Icon(Icons.person),
                   title: const Text('Name'),
-                  subtitle: Text(
-                    userData['name'],
-                  ),
+                  subtitle: Text(userData['name']),
                 ),
               ),
 
@@ -82,12 +51,9 @@ class ProfileScreen extends StatelessWidget {
 
               Card(
                 child: ListTile(
-                  leading:
-                      const Icon(Icons.email),
+                  leading: const Icon(Icons.email),
                   title: const Text('Email'),
-                  subtitle: Text(
-                    userData['email'],
-                  ),
+                  subtitle: Text(userData['email']),
                 ),
               ),
 
@@ -95,12 +61,9 @@ class ProfileScreen extends StatelessWidget {
 
               Card(
                 child: ListTile(
-                  leading:
-                      const Icon(Icons.badge),
+                  leading: const Icon(Icons.badge),
                   title: const Text('Role'),
-                  subtitle: Text(
-                    userData['role'],
-                  ),
+                  subtitle: Text(userData['role']),
                 ),
               ),
 
@@ -109,13 +72,9 @@ class ProfileScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 height: 50,
-                child:
-                    ElevatedButton.icon(
-
+                child: ElevatedButton.icon(
                   onPressed: () async {
-
-                    await AuthService()
-                        .logout();
+                    await AuthService().logout();
 
                     if (!context.mounted) {
                       return;
@@ -123,19 +82,14 @@ class ProfileScreen extends StatelessWidget {
 
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(
-                        builder: (_) =>
-                            const LoginScreen(),
-                      ),
+                      MaterialPageRoute(builder: (_) => const LoginScreen()),
                       (route) => false,
                     );
                   },
 
-                  icon:
-                      const Icon(Icons.logout),
+                  icon: const Icon(Icons.logout),
 
-                  label:
-                      const Text('Logout'),
+                  label: const Text('Logout'),
                 ),
               ),
             ],

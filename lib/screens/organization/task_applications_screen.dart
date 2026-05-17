@@ -7,34 +7,46 @@ class TaskApplicationsScreen
     extends StatelessWidget {
 
   final String taskId;
-  final String taskTitle;
 
   const TaskApplicationsScreen({
     super.key,
     required this.taskId,
-    required this.taskTitle
   });
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+
       appBar: AppBar(
-        title: const Text('Applications'),
+        title: const Text(
+          'Applications',
+        ),
       ),
+
       body: StreamBuilder<QuerySnapshot>(
 
         stream:
             ApplicationService()
-                .getTaskApplications(taskId, taskTitle),
+                .getTaskApplications(taskId),
 
         builder: (context, snapshot) {
 
-          if (!snapshot.hasData) {
+          if (snapshot.connectionState ==
+              ConnectionState.waiting) {
 
             return const Center(
               child:
                   CircularProgressIndicator(),
+            );
+          }
+
+          if (!snapshot.hasData) {
+
+            return const Center(
+              child: Text(
+                'No data found',
+              ),
             );
           }
 
@@ -51,36 +63,47 @@ class TaskApplicationsScreen
           }
 
           return ListView.builder(
-            itemCount: applications.length,
-            itemBuilder: (context, index) {
+
+            padding:
+                const EdgeInsets.all(16),
+
+            itemCount:
+                applications.length,
+
+            itemBuilder: (
+              context,
+              index,
+            ) {
 
               final application =
                   applications[index];
 
               return Card(
-                margin:
-                    const EdgeInsets.all(12),
+
                 child: Padding(
+
                   padding:
                       const EdgeInsets.all(16),
+
                   child: Column(
+
                     crossAxisAlignment:
                         CrossAxisAlignment
                             .start,
+
                     children: [
 
                       Text(
-                        'Volunteer ID:',
+                        application[
+                                'taskTitle'] ??
+                            'Volunteer Task',
+
                         style:
                             const TextStyle(
+                          fontSize: 18,
                           fontWeight:
                               FontWeight.bold,
                         ),
-                      ),
-
-                      Text(
-                        application[
-                            'volunteerId'],
                       ),
 
                       const SizedBox(
@@ -92,51 +115,71 @@ class TaskApplicationsScreen
                       ),
 
                       const SizedBox(
-                        height: 15,
+                        height: 20,
                       ),
 
                       Row(
                         children: [
 
-                          ElevatedButton(
-                            onPressed:
-                                () async {
-
-                              await ApplicationService()
-                                  .updateApplicationStatus(
-                                applicationId:
-                                    application
-                                        .id,
-                                status:
-                                    'approved',
-                              );
-                            },
+                          Expanded(
                             child:
-                                const Text(
-                              'Approve',
+                                ElevatedButton(
+
+                              onPressed:
+                                  () async {
+
+                                await ApplicationService()
+                                    .updateApplicationStatus(
+
+                                  applicationId:
+                                      application
+                                          .id,
+
+                                  status:
+                                      'approved',
+                                );
+                              },
+
+                              child:
+                                  const Text(
+                                'Approve',
+                              ),
                             ),
                           ),
 
                           const SizedBox(
-                            width: 10,
+                            width: 12,
                           ),
 
-                          ElevatedButton(
-                            onPressed:
-                                () async {
-
-                              await ApplicationService()
-                                  .updateApplicationStatus(
-                                applicationId:
-                                    application
-                                        .id,
-                                status:
-                                    'rejected',
-                              );
-                            },
+                          Expanded(
                             child:
-                                const Text(
-                              'Reject',
+                                ElevatedButton(
+
+                              onPressed:
+                                  () async {
+
+                                await ApplicationService()
+                                    .updateApplicationStatus(
+
+                                  applicationId:
+                                      application
+                                          .id,
+
+                                  status:
+                                      'rejected',
+                                );
+                              },
+
+                              style:
+                                  ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Colors.red,
+                              ),
+
+                              child:
+                                  const Text(
+                                'Reject',
+                              ),
                             ),
                           ),
                         ],

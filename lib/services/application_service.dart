@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'log_service.dart';
 
 class ApplicationService {
@@ -7,9 +8,12 @@ class ApplicationService {
   final FirebaseFirestore _firestore =
       FirebaseFirestore.instance;
 
-  Future<String?> applyToTask(
-    String taskId, String taskTitle
-  ) async {
+  // APPLY TO TASK
+
+  Future<String?> applyToTask({
+    required String taskId,
+    required String taskTitle,
+  }) async {
 
     try {
 
@@ -37,7 +41,10 @@ class ApplicationService {
       QuerySnapshot existing =
           await _firestore
               .collection('applications')
-              .where('taskId', isEqualTo: taskId)
+              .where(
+                'taskId',
+                isEqualTo: taskId,
+              )
               .where(
                 'volunteerId',
                 isEqualTo: userId,
@@ -45,17 +52,24 @@ class ApplicationService {
               .get();
 
       if (existing.docs.isNotEmpty) {
+
         return 'You already applied to this task';
       }
+
+      // SAVE APPLICATION
 
       await _firestore
           .collection('applications')
           .add({
 
         'taskId': taskId,
+
         'taskTitle': taskTitle,
+
         'volunteerId': userId,
+
         'status': 'pending',
+
         'appliedAt': Timestamp.now(),
       });
 
@@ -71,20 +85,22 @@ class ApplicationService {
     }
   }
 
-    // GET APPLICATIONS FOR TASK
+  // GET APPLICATIONS FOR TASK
 
   Stream<QuerySnapshot> getTaskApplications(
     String taskId,
-    String taskTitle
   ) {
 
     return _firestore
         .collection('applications')
-        .where('taskId', isEqualTo: taskId)
+        .where(
+          'taskId',
+          isEqualTo: taskId,
+        )
         .snapshots();
   }
 
-  // UPDATE STATUS
+  // UPDATE APPLICATION STATUS
 
   Future<void> updateApplicationStatus({
     required String applicationId,
@@ -95,6 +111,7 @@ class ApplicationService {
         .collection('applications')
         .doc(applicationId)
         .update({
+
       'status': status,
     });
 

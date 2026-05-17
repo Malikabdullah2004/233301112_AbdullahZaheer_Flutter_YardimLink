@@ -19,8 +19,6 @@ class AuthService {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      
-
       await _firestore.collection('users').doc(userCredential.user!.uid).set({
         'name': name,
         'email': email,
@@ -66,4 +64,15 @@ class AuthService {
   // CURRENT USER
 
   User? get currentUser => _auth.currentUser;
+
+  Future<String> getUserRole() async {
+    String userId = _auth.currentUser!.uid;
+
+    DocumentSnapshot userDoc = await _firestore
+        .collection('users')
+        .doc(userId)
+        .get();
+
+    return userDoc['role'];
+  }
 }
