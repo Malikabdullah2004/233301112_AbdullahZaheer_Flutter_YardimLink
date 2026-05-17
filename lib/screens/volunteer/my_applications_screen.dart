@@ -13,63 +13,57 @@ class MyApplicationsScreen
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'My Applications',
-        ),
-      ),
-      body: StreamBuilder<QuerySnapshot>(
+    return StreamBuilder<QuerySnapshot>(
 
-        stream:
-            ApplicationService()
-                .getUserApplications(),
+      stream:
+          ApplicationService()
+              .getUserApplications(),
 
-        builder: (context, snapshot) {
+      builder: (context, snapshot) {
 
-          if (!snapshot.hasData) {
+        if (!snapshot.hasData) {
 
-            return const Center(
-              child:
-                  CircularProgressIndicator(),
-            );
-          }
+          return const Center(
+            child:
+                CircularProgressIndicator(),
+          );
+        }
 
-          final applications =
-              snapshot.data!.docs;
+        final applications =
+            snapshot.data!.docs;
 
-          if (applications.isEmpty) {
+        if (applications.isEmpty) {
 
-            return const Center(
-              child: Text(
-                'No applications yet',
+          return const Center(
+            child: Text(
+              'No applications yet',
+            ),
+          );
+        }
+
+        return ListView.builder(
+          itemCount: applications.length,
+          itemBuilder: (context, index) {
+
+            final application =
+                applications[index];
+
+            return Card(
+              margin:
+                  const EdgeInsets.all(12),
+              child: ListTile(
+                title: Text(
+                  application['taskTitle'] ??
+                      'Volunteer Task',
+                ),
+                subtitle: Text(
+                  'Status: ${application['status']}',
+                ),
               ),
             );
-          }
-
-          return ListView.builder(
-            itemCount: applications.length,
-            itemBuilder: (context, index) {
-
-              final application =
-                  applications[index];
-
-              return Card(
-                margin:
-                    const EdgeInsets.all(12),
-                child: ListTile(
-                  title: Text(
-                    'Task Name:w ${application['taskTitle']}',
-                  ),
-                  subtitle: Text(
-                    'Status: ${application['status']}',
-                  ),
-                ),
-              );
-            },
-          );
-        },
-      ),
+          },
+        );
+      },
     );
   }
 }

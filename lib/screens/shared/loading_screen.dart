@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../auth/login_screen.dart';
-import '../organization/organization_home_screen.dart';
-import '../volunteer/volunteer_home_screen.dart';
+import '../organization/organization_main_screen.dart';
+import '../volunteer/volunteer_main_screen.dart';
 
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({super.key});
@@ -26,9 +26,9 @@ class LoadingScreen extends StatelessWidget {
     String role = userDoc['role'];
 
     if (role == 'Volunteer') {
-      return const VolunteerHomeScreen();
+      return const VolunteerMainScreen();
     } else {
-      return const OrganizationHomeScreen();
+      return const OrganizationMainScreen();
     }
   }
 

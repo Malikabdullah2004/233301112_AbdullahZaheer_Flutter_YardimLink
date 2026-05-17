@@ -17,10 +17,12 @@ class TaskCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {
+
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => TaskDetailScreen(
+            builder: (_) =>
+                TaskDetailScreen(
               task: task,
             ),
           ),
@@ -39,6 +41,8 @@ class TaskCard extends StatelessWidget {
                 CrossAxisAlignment.start,
             children: [
 
+              // TASK TITLE
+
               Text(
                 task.title,
                 style: const TextStyle(
@@ -47,15 +51,25 @@ class TaskCard extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
+
+              // TASK DESCRIPTION
 
               Text(
                 task.description,
-                maxLines: 2,
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.black87,
+                  height: 1.4,
+                ),
               ),
 
-              const SizedBox(height: 15),
+              const Divider(
+                height: 30,
+              ),
+
+              // LOCATION
 
               Row(
                 children: [
@@ -68,7 +82,9 @@ class TaskCard extends StatelessWidget {
 
                   const SizedBox(width: 5),
 
-                  Text(task.city),
+                  Text(
+                    task.city,
+                  ),
                 ],
               ),
             ],
