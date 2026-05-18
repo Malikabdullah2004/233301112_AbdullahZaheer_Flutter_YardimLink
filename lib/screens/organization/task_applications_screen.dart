@@ -63,6 +63,18 @@ class TaskApplicationsScreen extends StatelessWidget {
                         ),
                       ),
 
+                      const SizedBox(height: 8),
+
+                      Text(
+                        'Volunteer: '
+                        '${application['volunteerName']}',
+                      ),
+
+                      Text(
+                        'Email: '
+                        '${application['volunteerEmail']}',
+                      ),
+
                       const SizedBox(height: 10),
 
                       Text('Status: ${application['status']}'),

@@ -121,6 +121,12 @@ class TaskCard extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
+
+                const SizedBox(height: 8),
+
+Text(
+  'Organization: ${task.organizationName}',
+),
               ],
             ),
           ),

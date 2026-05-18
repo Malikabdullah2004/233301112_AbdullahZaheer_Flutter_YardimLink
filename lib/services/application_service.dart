@@ -42,6 +42,21 @@ class ApplicationService {
         return 'You already applied to this task';
       }
 
+      // GET VOLUNTEER INFO
+
+      String volunteerName = userDoc['name'];
+
+      String volunteerEmail = userDoc['email'];
+
+      // GET TASK INFO
+
+      DocumentSnapshot taskDoc = await _firestore
+          .collection('tasks')
+          .doc(taskId)
+          .get();
+
+      String organizationName = taskDoc['organizationName'];
+
       // SAVE APPLICATION
 
       await _firestore.collection('applications').add({
@@ -49,7 +64,13 @@ class ApplicationService {
 
         'taskTitle': taskTitle,
 
+        'organizationName': organizationName,
+
         'volunteerId': userId,
+
+        'volunteerName': volunteerName,
+
+        'volunteerEmail': volunteerEmail,
 
         'status': 'pending',
 

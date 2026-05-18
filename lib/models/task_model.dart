@@ -7,6 +7,7 @@ class TaskModel {
   final String city;
   final String createdBy;
   final Timestamp createdAt;
+  final String organizationName;
 
   TaskModel({
     required this.id,
@@ -15,6 +16,7 @@ class TaskModel {
     required this.city,
     required this.createdBy,
     required this.createdAt,
+    required this.organizationName,
   });
 
   factory TaskModel.fromMap(String id, Map<String, dynamic> data) {
@@ -25,6 +27,7 @@ class TaskModel {
       city: data['city'] ?? '',
       createdBy: data['createdBy'] ?? '',
       createdAt: data['createdAt'],
+      organizationName: data['organizationName'] ?? '',
     );
   }
 
