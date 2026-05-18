@@ -83,17 +83,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 25),
 
               const Text(
-                'Create Account',
+                'YardimLink',
 
                 textAlign: TextAlign.center,
 
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
               ),
 
               const SizedBox(height: 10),
 
               const Text(
-                'Join the volunteer community today',
+                'Create Account',
+
+                textAlign: TextAlign.center,
+
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+
+              const SizedBox(height: 10),
+
+              const Text(
+                'Create an account and start making a difference',
 
                 textAlign: TextAlign.center,
 

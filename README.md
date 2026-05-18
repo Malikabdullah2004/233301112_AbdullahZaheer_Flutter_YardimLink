@@ -16,23 +16,67 @@ The platform connects organizations with volunteers through task posting and app
 - Responsive UI
 - Modern Flutter Material 3 design
 
-## Technologies Used
+## Packages Used
 
-- Flutter
-- Dart
-- Firebase Authentication
-- Cloud Firestore
-- Material 3
+- firebase_core
+- firebase_auth
+- cloud_firestore
+- google_fonts
+- flutter
+- cupertino_icons
 
 ## Screenshots
+    ### Login Screen
+
+![Login Screen](Screenshots\login_page.png)
+
+---
+
+### Register Screen
+
+![Register Screen](Screenshots/register_page.png)
+
+---
+
+### Volunteer Home Screen
+
+![Volunteer Home](Screenshots/volunteer_homescreen.png)
+
+---
+
+### Volunteer Application Screen
+
+![Volunteer Applications](Screenshots/volunteer_application%20tab.png)
+
+---
+
+### Organization Dashboard
+
+![Organization Dashboard](Screenshots/organizations_tasks_screen.png)
+
+---
+
+### Organization Task Creation
+
+![Organization Task creation](Screenshots/organizations_create_task.png)
+
+---
+
+### Profile Page Preview
+
+![Profile Page](Screenshots/profile_page.png)
+
+---
+
+### Dark Mode
+
+![Dark Mode](Screenshots/dark_mode_preview.png)
 
 
-## Installation
 
-1. Clone repository
-2. Run flutter pub get
-3. Configure Firebase
-4. Run flutter run
+## Test Account Login and Access
+
+
 
 
 ## Developers
