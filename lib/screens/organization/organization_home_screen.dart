@@ -24,7 +24,7 @@ class OrganizationHomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: const TaskListScreen(),
+      body:  TaskListScreen(onlyMyTasks: true),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(

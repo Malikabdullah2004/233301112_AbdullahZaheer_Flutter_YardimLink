@@ -3,14 +3,21 @@ import 'package:flutter/material.dart';
 import '../../models/task_model.dart';
 import '../../services/task_service.dart';
 import '../../widgets/task_card.dart';
+import '../../widgets/empty_state.dart';
 
 class TaskListScreen extends StatelessWidget {
-  const TaskListScreen({super.key});
+  final bool onlyMyTasks;
+
+  TaskListScreen({super.key, this.onlyMyTasks = false});
+
+  final TaskService taskService = TaskService();
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<TaskModel>>(
-      stream: TaskService().getTasks(),
+      stream: onlyMyTasks
+          ? taskService.getOrganizationTasks()
+          : taskService.getTasks(),
 
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -18,27 +25,28 @@ class TaskListScreen extends StatelessWidget {
         }
 
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // ignore: unnecessary_const
-              children: const [
-                Icon(Icons.volunteer_activism, size: 80, color: Colors.grey),
+          return const EmptyState(
+            icon: Icons.assignment_outlined,
 
-                SizedBox(height: 20),
+            title: 'No Tasks Found',
 
-                Text('No volunteer tasks yet', style: TextStyle(fontSize: 18)),
-              ],
-            ),
+            subtitle: 'There are currently no available tasks.',
           );
         }
 
-        List<TaskModel> tasks = snapshot.data!;
+        final tasks = snapshot.data!;
 
         return ListView.builder(
+          padding: const EdgeInsets.all(16),
+
           itemCount: tasks.length,
+
           itemBuilder: (context, index) {
-            return TaskCard(task: tasks[index]);
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+
+              child: TaskCard(task: tasks[index]),
+            );
           },
         );
       },

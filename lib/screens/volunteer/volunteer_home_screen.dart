@@ -33,7 +33,7 @@ class VolunteerHomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: const TaskListScreen(),
+      body:  TaskListScreen(),
     );
   }
 }

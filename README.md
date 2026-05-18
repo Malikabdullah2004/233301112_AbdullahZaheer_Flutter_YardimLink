@@ -26,7 +26,8 @@ The platform connects organizations with volunteers through task posting and app
 - cupertino_icons
 
 ## Screenshots
-    ### Login Screen
+   
+### Login Screen
 
 ![Login Screen](Screenshots\login_page.png)
 

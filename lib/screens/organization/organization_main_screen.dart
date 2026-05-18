@@ -16,7 +16,9 @@ class OrganizationMainScreen extends StatefulWidget {
 class _OrganizationMainScreenState extends State<OrganizationMainScreen> {
   int currentIndex = 0;
 
-  final List<Widget> screens = [const TaskListScreen(), const ProfileScreen()];
+  final List<Widget> screens = [ TaskListScreen(
+  onlyMyTasks: true,
+), const ProfileScreen()];
 
   final List<String> titles = ['Organization Tasks', 'Profile'];
 

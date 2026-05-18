@@ -6,6 +6,7 @@ import 'log_service.dart';
 
 class TaskService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // CREATE TASK
 
@@ -19,8 +20,8 @@ class TaskService {
         'title': title,
         'description': description,
         'city': city,
-        'createdBy': FirebaseAuth.instance.currentUser!.uid,
         'createdAt': Timestamp.now(),
+        'createdBy': _auth.currentUser!.uid,
       });
 
       await LogService().addLog('Created task: $title');
@@ -86,6 +87,21 @@ class TaskService {
   Stream<List<TaskModel>> getTasks() {
     return _firestore
         .collection('tasks')
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs.map((doc) {
+            return TaskModel.fromMap(doc.id, doc.data());
+          }).toList();
+        });
+  }
+
+  Stream<List<TaskModel>> getOrganizationTasks() {
+    String userId = _auth.currentUser!.uid;
+
+    return _firestore
+        .collection('tasks')
+        .where('createdBy', isEqualTo: userId)
         .orderBy('createdAt', descending: true)
         .snapshots()
         .map((snapshot) {
