@@ -80,21 +80,21 @@ The platform connects organizations with volunteers through task posting and app
 #### Gonullular
             IKI GONULLU HESAPLARI OLUSTURDUM
 
-E-mail: volunteer1@mail.com
-Password: volunteer1
+    E-mail: volunteer1@mail.com
+    Password: volunteer1
 
-E-mail: volunteer2@mail.com
-Password: volunteer2
+    E-mail: volunteer2@mail.com
+    Password: volunteer2
 ---
 
 #### Kurumlar
             IKI KURUM HESAPLARI OLUSTURDUM
 
-E-mail: organization1@mail.com
-Password: organization1
+    E-mail: organization1@mail.com
+    Password: organization1
 
-E-mail: organization2@mail.com
-Password: organization2
+    E-mail: organization2@mail.com
+    Password: organization2
 ---
 
 
