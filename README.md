@@ -103,4 +103,4 @@ The platform connects organizations with volunteers through task posting and app
 
 - Abdullah Zaheer
 - 233301112
--Computer Engineering, Selcuk University.
+- Computer Engineering, Selcuk University.
