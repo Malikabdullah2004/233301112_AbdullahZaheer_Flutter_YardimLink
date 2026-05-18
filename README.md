@@ -29,7 +29,7 @@ The platform connects organizations with volunteers through task posting and app
    
 ### Login Screen
 
-![Login Screen](Screenshots\login_page.png)
+![Login Screen](Screenshots/login_page.png)
 
 ---
 
